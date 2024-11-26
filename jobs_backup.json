@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "67445e24ed47790674ec75ad",
+    "company": "Google",
+    "position": "Software Engineer",
+    "salary": "100k-120k",
+    "status": "Applied",
+    "note": "Ожидаю ответа"
+  },
+  {
+    "_id": "67445e24ed47790674ec75ae",
+    "company": "Microsoft",
+    "position": "Frontend Developer",
+    "salary": "90k-110k",
+    "status": "Interviewed",
+    "note": "Интервью назначено на следующую неделю"
+  },
+  {
+    "_id": "67445e24ed47790674ec75af",
+    "company": "Amazon",
+    "position": "Backend Developer",
+    "salary": "110k-130k",
+    "status": "Rejected",
+    "note": "Причина отказа неизвестна"
+  }
+]
