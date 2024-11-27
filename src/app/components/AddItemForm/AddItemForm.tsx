@@ -1,33 +1,62 @@
-'use client';
-
 import React from "react";
-import {Job} from "@/app/jobs/page";
+import {JobForm} from "@/app/jobs/page";
 
-const AddItemForm = ({job, deleteJob}:Props)=>{
 
+const AddItemForm = ({newJob, setNewJob, handleAddJob, setIsAdding}:Props) => {
     return (
         <>
-            <div
-                key={job.id}
-                className="bg-white border border-gray-300 rounded-lg p-4 mb-4 shadow"
-            >
-                <div className="flex justify-between items-center mb-2">
-                    <div>
-                        <h2 className="font-semibold text-lg">{job.company}</h2>
-                        <p className="text-gray-600">{job.position}</p>
-                        <span className="text-sm text-teal-500">{job.status}</span>
-                    </div>
-                    <p className="font-bold text-md">{job.salary}</p>
+            <div className="bg-gray-50 border border-gray-300 rounded-lg p-4 mb-6 shadow">
+                <div className="mb-4">
+                    <label className="block text-gray-700 font-medium mb-1">Компания</label>
+                    <input
+                        type="text"
+                        value={newJob.company}
+                        onChange={(e) => setNewJob({...newJob, company: e.target.value})}
+                        className="w-full border-gray-300 rounded-md p-2"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 font-medium mb-1">Вакансия</label>
+                    <input
+                        type="text"
+                        value={newJob.position}
+                        onChange={(e) => setNewJob({...newJob, position: e.target.value})}
+                        className="w-full border-gray-300 rounded-md p-2"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 font-medium mb-1">Зарплата</label>
+                    <input
+                        type="text"
+                        value={newJob.salary}
+                        onChange={(e) => setNewJob({...newJob, salary: e.target.value})}
+                        className="w-full border-gray-300 rounded-md p-2"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 font-medium mb-1">Статус</label>
+                    <select
+                        value={newJob.status}
+                        onChange={(e) => setNewJob({...newJob, status: e.target.value})}
+                        className="w-full border-gray-300 rounded-md p-2"
+                    >
+                        <option value="">Выберите статус</option>
+                        <option value="Open">Открыта</option>
+                        <option value="Closed">Закрыта</option>
+                    </select>
                 </div>
                 <div className="flex justify-end gap-2">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-                        Edit
+                    <button
+                        onClick={handleAddJob}
+                        className="bg-green-500 text-white px-4 py-2 rounded-md"
+                    >
+                        Сохранить
                     </button>
                     <button
-                        onClick={() => deleteJob(job.id)}
+                        onClick={() => setIsAdding(false)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md"
                     >
-                        Delete
+                        Отмена
                     </button>
                 </div>
             </div>
@@ -39,6 +68,8 @@ export default AddItemForm;
 
 //type
 type Props = {
-    job: Job
-    deleteJob: (id: string) => void
+    newJob:JobForm
+    setNewJob: (newJob:JobForm) => void
+    handleAddJob: () => void
+    setIsAdding: (isAdding: boolean) => void
 }
