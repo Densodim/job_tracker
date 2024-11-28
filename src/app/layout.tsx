@@ -1,8 +1,9 @@
 import type {Metadata} from "next"
 import localFont from "next/font/local"
 import "./globals.css"
-import {createTheme, MantineProvider} from "@mantine/core";
-import '@mantine/core/styles.css';
+import {createTheme, MantineProvider} from "@mantine/core"
+import "@mantine/core/styles.css"
+import Providers from "@/app/providers";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
 }
 
 const theme = createTheme({
-    fontFamily: 'Open Sans, sans-serif',
-    primaryColor: 'cyan',
-});
+    fontFamily: "Open Sans, sans-serif",
+    primaryColor: "cyan",
+})
 
 export default function RootLayout({
                                        children,
@@ -35,11 +36,11 @@ export default function RootLayout({
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <MantineProvider theme={theme}>
-            <div className="p-8 max-w-4xl mx-auto">
-                {children}
-            </div>
-        </MantineProvider>
+        <Providers>
+            <MantineProvider theme={theme}>
+                <div className="p-8 max-w-4xl mx-auto">{children}</div>
+            </MantineProvider>
+        </Providers>
         </body>
         </html>
     )

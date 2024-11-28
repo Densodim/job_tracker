@@ -1,63 +1,47 @@
-'use client';
+"use client"
 
-import React, { useEffect, useState } from 'react';
-import ItemForm from "@/app/components/ItemForm/ItemForm";
-import AddItemForm from "@/app/components/AddItemForm/AddItemForm";
+import React, {useState} from "react"
+
+import AddItemForm from "@/app/components/AddItemForm/AddItemForm"
+import {HydrationBoundary} from "@tanstack/react-query";
+import {JobsInfo} from "@/app/hooks/Jobs-info";
+import {getQueryClient} from "@/app/get-query-client";
+import {jobsOptions} from "@/app/hooks/Jobs";
 
 const JobPage = () => {
-    const [jobs, setJobs] = useState<Job[]>([]);
-    const [isAdding, setIsAdding] = useState(false);
+
+    const queryClient = getQueryClient()
+
+    void queryClient.prefetchQuery(jobsOptions)
+
+    const [isAdding, setIsAdding] = useState(false)
     const [newJob, setNewJob] = useState<JobForm>({
-        company: '',
-        position: '',
-        salary: '',
-        status: '',
-        note: '',
-    });
+        company: "",
+        position: "",
+        salary: "",
+        status: "",
+        note: "",
+    })
 
-    const fetchJobs = async () => {
-        try {
-            const response = await fetch('/api/jobs');
-            if (!response.ok) throw new Error('Ошибка загрузки вакансий');
-            const data = await response.json();
-            setJobs(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const deleteJob = async (id: string) => {
-        try {
-            await fetch(`/api/jobs/${id}`, { method: 'DELETE' });
-            fetchJobs();
-        } catch (error) {
-            console.error('Ошибка при удалении:', error);
-        }
-    };
 
     const handleAddJob = async () => {
         try {
-            const response = await fetch('/api/jobs', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+            const response = await fetch("/api/jobs", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(newJob),
-            });
-            if (!response.ok) throw new Error('Ошибка добавления вакансии');
-            fetchJobs();
-            setIsAdding(false);
-            setNewJob({ company: '', position: '', salary: '', status: '', note: '' });
+            })
+            if (!response.ok) throw new Error("Ошибка добавления вакансии")
+            // fetchJobs()
+            setIsAdding(false)
+            setNewJob({company: "", position: "", salary: "", status: "", note: ""})
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
-    };
-
-    useEffect(() => {
-        fetchJobs();
-    }, []);
+    }
 
     return (
         <>
-
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Вакансии</h1>
                 <button
@@ -69,26 +53,32 @@ const JobPage = () => {
             </div>
 
             {isAdding && (
-                <AddItemForm newJob={newJob} setNewJob={setNewJob} handleAddJob={handleAddJob} setIsAdding={setIsAdding}/>
+                <AddItemForm
+                    newJob={newJob}
+                    setNewJob={setNewJob}
+                    handleAddJob={handleAddJob}
+                    setIsAdding={setIsAdding}
+                />
             )}
 
-            {jobs.map((job) => (
-                <ItemForm job={job} deleteJob={deleteJob}/>
-            ))}
-        </>
-    );
-};
 
-export default JobPage;
+            <HydrationBoundary state={queryClient}>
+                <JobsInfo/>
+            </HydrationBoundary>
+        </>
+    )
+}
+
+export default JobPage
 
 // Типы
 export type Job = {
-    id: string;
-    company: string;
-    position: string;
-    salary: string;
-    status: string;
-    note: string;
-};
+    _id: string
+    company: string
+    position: string
+    salary: string
+    status: string
+    note: string
+}
 
-export type JobForm = Omit<Job, 'id'>;
+export type JobForm = Omit<Job, "_id">
