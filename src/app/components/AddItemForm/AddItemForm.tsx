@@ -1,50 +1,82 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import {JobForm} from "@/app/jobs/page";
+import {useForm} from "@mantine/form";
+import UniversalInput from "@/app/components/Input/UniversalInput";
+import UniversalSelect from "@/app/components/Select/UniversalSelect";
 
+export enum StatusJobs {
+    Applied = 'APPLIED',
+    Interviewed = 'INTERVIEWED',
+    Rejected = 'REJECTED',
+}
+
+const options = [
+    { value: StatusJobs.Applied, label: 'Applied' },
+    { value: StatusJobs.Interviewed, label: 'Interviewed' },
+    { value: StatusJobs.Rejected, label: 'Rejected' },
+];
 
 const AddItemForm = ({newJob, setNewJob, handleAddJob, setIsAdding}:Props) => {
+    const [status, setStatus] = useState('');
+
+    const form = useForm({
+        initialValues: {
+            company: '',
+            position: '',
+            salary: 0,
+            status: StatusJobs.Applied,
+        },
+        validate: {
+            company: (value) => (value.trim() ? null : 'Company name is required'),
+            position: (value) =>
+                value.trim().length >= 2 ? null : 'Position must have at least 2 letters',
+            salary: (value) =>
+                value > 0 && Number.isFinite(value) ? null : 'Salary must be a positive number',
+        },
+    });
+
+
     return (
         <>
             <div className="bg-gray-50 border border-gray-300 rounded-lg p-4 mb-6 shadow">
-                <div className="mb-4">
-                    <label className="block text-gray-700 font-medium mb-1">Компания</label>
-                    <input
-                        type="text"
-                        value={newJob.company}
-                        onChange={(e) => setNewJob({...newJob, company: e.target.value})}
-                        className="w-full border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 font-medium mb-1">Вакансия</label>
-                    <input
-                        type="text"
-                        value={newJob.position}
-                        onChange={(e) => setNewJob({...newJob, position: e.target.value})}
-                        className="w-full border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 font-medium mb-1">Зарплата</label>
-                    <input
-                        type="text"
-                        value={newJob.salary}
-                        onChange={(e) => setNewJob({...newJob, salary: e.target.value})}
-                        className="w-full border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 font-medium mb-1">Статус</label>
-                    <select
-                        value={newJob.status}
-                        onChange={(e) => setNewJob({...newJob, status: e.target.value})}
-                        className="w-full border-gray-300 rounded-md p-2"
-                    >
-                        <option value="">Выберите статус</option>
-                        <option value="Open">Открыта</option>
-                        <option value="Closed">Закрыта</option>
-                    </select>
-                </div>
+                <UniversalInput
+                    label={'Company'}
+                    value={form.values.company}
+                    placeholder={'Company'}
+                    onChange={(value) => form.setFieldValue('company', value as string)}
+                />
+                {form.errors.company && (
+                    <div className="text-red-500 text-sm">{form.errors.company}</div>
+                )}
+                <UniversalInput
+                    label={'Position'}
+                    value={form.values.position}
+                    placeholder={'Position'}
+                    onChange={(value) => form.setFieldValue('position', value as string)}
+                />
+                {form.errors.position && (
+                    <div className="text-red-500 text-sm">{form.errors.position}</div>
+                )}
+                <UniversalInput
+                    label={'Salary'}
+                    type={'number'}
+                    value={form.values.salary}
+                    placeholder={'Salary'}
+                    onChange={(value) => form.setFieldValue('salary', Number(value))}
+                />
+                {form.errors.salary && (
+                    <div className="text-red-500 text-sm">{form.errors.salary}</div>
+                )}
+
+                <UniversalSelect
+                    label="Status"
+                    placeholder="Select job status"
+                    value={status}
+                    onChange={setStatus}
+                    options={options}
+                />
+
                 <div className="flex justify-end gap-2">
                     <button
                         onClick={handleAddJob}
