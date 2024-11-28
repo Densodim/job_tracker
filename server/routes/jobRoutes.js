@@ -49,7 +49,7 @@ router.put('/jobs/:id', async (req, res) => {
   }
 });
 
-// Удалить вакансию
+
 router.delete('/jobs/:id', async (req, res) => {
   const { id } = req.params;
 

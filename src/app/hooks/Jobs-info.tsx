@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {useSuspenseQuery} from '@tanstack/react-query'
+import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query'
 import {jobsOptions} from "@/app/hooks/Jobs";
 import ItemForm from "@/app/components/ItemForm/ItemForm";
 import {Job} from "@/app/jobs/page";
@@ -9,12 +9,19 @@ import {Job} from "@/app/jobs/page";
 
 export function JobsInfo() {
     const {data} = useSuspenseQuery(jobsOptions)
+    const queryClient = useQueryClient();
 
-    const deleteJob = async (id: string) => {
+    const deleteJob = async (_id: string) => {
         try {
-            await fetch(`/api/jobs/${id}`, {method: "DELETE"})
+            const response =  await fetch(`/api/jobs/${_id}`, {method: "DELETE"})
+            if (!response.ok) {
+                throw new Error('Error during deletion')
+            }
+
+            await queryClient.invalidateQueries({queryKey: ['jobs'], exact: true, refetchType: 'all'});
+
         } catch (error) {
-            console.error("Ошибка при удалении:", error)
+            console.error("Error when deleting:", error)
         }
     }
 

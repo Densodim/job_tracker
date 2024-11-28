@@ -43,23 +43,4 @@ export async function PUT(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
-  try {
-    const url = new URL(request.url) // Получаем query-параметры
-    const id = url.searchParams.get("id")
-    if (!id) {
-      return new Response(JSON.stringify({ error: "ID не передан" }), {
-        status: 400,
-      })
-    }
 
-    await axios.delete(`${API_URL}/jobs/${id}`)
-    return new Response(null, { status: 204 })
-  } catch (error) {
-    console.error("Ошибка при удалении вакансии:", error)
-    return new Response(
-      JSON.stringify({ error: "Не удалось удалить вакансию" }),
-      { status: 500 },
-    )
-  }
-}
