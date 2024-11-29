@@ -1,9 +1,11 @@
 "use client"
-import React, { useState } from "react"
+import React from "react"
 import { JobForm } from "@/app/jobs/page"
 import { useForm } from "@mantine/form"
 import UniversalInput from "@/app/components/Input/UniversalInput"
 import UniversalSelect from "@/app/components/Select/UniversalSelect"
+import {Textarea} from "@mantine/core";
+
 
 export enum StatusJobs {
   Applied = "APPLIED",
@@ -18,19 +20,17 @@ const options = [
 ]
 
 const AddItemForm = ({
-  newJob,
-  setNewJob,
-  handleAddJob,
+  AddJob,
   setIsAdding,
 }: Props) => {
-  const [status, setStatus] = useState("")
 
-  const form = useForm({
+  const mantine = useForm({
     initialValues: {
       company: "",
       position: "",
       salary: 0,
-      status: StatusJobs.Applied,
+      status: "",
+      note: "",
     },
     validate: {
       company: (value) => (value.trim() ? null : "Company name is required"),
@@ -42,48 +42,70 @@ const AddItemForm = ({
         value > 0 && Number.isFinite(value)
           ? null
           : "Salary must be a positive number",
+      note: (value) => (value.trim() ? null : "Note name is required"),
+      status:(value) => (value ? null : "Status is required"),
     },
   })
+
+  const handleAddJob = async ()=>{
+    const validation = mantine.validate();
+    if (!validation.hasErrors){
+     await AddJob(mantine.values, mantine.reset)
+    }
+  }
+
 
   return (
     <>
       <div className="bg-gray-50 border border-gray-300 rounded-lg p-4 mb-6 shadow">
         <UniversalInput
           label={"Company"}
-          value={form.values.company}
+          value={mantine.values.company}
           placeholder={"Company"}
-          onChange={(value) => form.setFieldValue("company", value as string)}
+          onChange={(value) => mantine.setFieldValue("company", value as string)}
         />
-        {form.errors.company && (
-          <div className="text-red-500 text-sm">{form.errors.company}</div>
+        {mantine.errors.company && (
+          <div className="text-red-500 text-sm">{mantine.errors.company}</div>
         )}
         <UniversalInput
           label={"Position"}
-          value={form.values.position}
+          value={mantine.values.position}
           placeholder={"Position"}
-          onChange={(value) => form.setFieldValue("position", value as string)}
+          onChange={(value) => mantine.setFieldValue("position", value as string)}
         />
-        {form.errors.position && (
-          <div className="text-red-500 text-sm">{form.errors.position}</div>
+        {mantine.errors.position && (
+          <div className="text-red-500 text-sm">{mantine.errors.position}</div>
         )}
         <UniversalInput
           label={"Salary"}
           type={"number"}
-          value={form.values.salary}
+          value={mantine.values.salary}
           placeholder={"Salary"}
-          onChange={(value) => form.setFieldValue("salary", Number(value))}
+          onChange={(value) => mantine.setFieldValue("salary", Number(value))}
         />
-        {form.errors.salary && (
-          <div className="text-red-500 text-sm">{form.errors.salary}</div>
+        {mantine.errors.salary && (
+          <div className="text-red-500 text-sm">{mantine.errors.salary}</div>
+        )}
+        <Textarea
+          label={"Note"}
+          value={mantine.values.note}
+          placeholder={"Note"}
+          onChange={(event) => mantine.setFieldValue("note", event.target.value)}
+        />
+        {mantine.errors.note && (
+            <div className="text-red-500 text-sm">{mantine.errors.note}</div>
         )}
 
         <UniversalSelect
           label="Status"
           placeholder="Select job status"
-          value={status}
-          onChange={setStatus}
+          value={mantine.values.status}
+          onChange={(value) => mantine.setFieldValue("status", value as string)}
           options={options}
         />
+        {mantine.errors.status && (
+            <div className="text-red-500 text-sm">{mantine.errors.status}</div>
+        )}
 
         <div className="flex justify-end gap-2">
           <button
@@ -108,8 +130,6 @@ export default AddItemForm
 
 //type
 type Props = {
-  newJob: JobForm
-  setNewJob: (newJob: JobForm) => void
-  handleAddJob: () => void
+  AddJob: (newJobs: JobForm, resetForm: () => void) => Promise<void>
   setIsAdding: (isAdding: boolean) => void
 }

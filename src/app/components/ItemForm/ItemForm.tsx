@@ -4,6 +4,7 @@ import React from "react"
 import { Job } from "@/app/jobs/page"
 
 const ItemForm = ({ job, deleteJob }: Props) => {
+
   return (
     <>
       <div

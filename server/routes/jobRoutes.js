@@ -29,7 +29,7 @@ router.post('/jobs', async (req, res) => {
   }
 });
 
-// Обновить вакансию
+
 router.put('/jobs/:id', async (req, res) => {
   const { id } = req.params;
   const { company, position, salary, status, note } = req.body;
