@@ -1,7 +1,7 @@
 "use client"
 import React, { Suspense, useState } from "react"
 import AddItemForm from "@/app/components/AddItemForm/AddItemForm"
-import { JobsInfo } from "@/app/hooks/Jobs-info"
+import { JobsInfo } from "@/app/components/Jobs-info"
 import { useAddJob } from "@/app/hooks/useAddJob"
 
 const JobPage = () => {
