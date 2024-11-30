@@ -3,7 +3,7 @@ import localFont from "next/font/local"
 import "./globals.css"
 import { createTheme, MantineProvider } from "@mantine/core"
 import "@mantine/core/styles.css"
-import Providers from "@/app/providers"
+import { Providers } from "@/app/providers"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

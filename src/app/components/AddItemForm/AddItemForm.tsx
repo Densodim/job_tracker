@@ -4,8 +4,7 @@ import { JobForm } from "@/app/jobs/page"
 import { useForm } from "@mantine/form"
 import UniversalInput from "@/app/components/Input/UniversalInput"
 import UniversalSelect from "@/app/components/Select/UniversalSelect"
-import {Textarea} from "@mantine/core";
-
+import { Textarea } from "@mantine/core"
 
 export enum StatusJobs {
   Applied = "APPLIED",
@@ -19,11 +18,7 @@ const options = [
   { value: StatusJobs.Rejected, label: "Rejected" },
 ]
 
-const AddItemForm = ({
-  AddJob,
-  setIsAdding,
-}: Props) => {
-
+const AddItemForm = ({ AddJob, setIsAdding }: Props) => {
   const mantine = useForm({
     initialValues: {
       company: "",
@@ -43,17 +38,16 @@ const AddItemForm = ({
           ? null
           : "Salary must be a positive number",
       note: (value) => (value.trim() ? null : "Note name is required"),
-      status:(value) => (value ? null : "Status is required"),
+      status: (value) => (value ? null : "Status is required"),
     },
   })
 
-  const handleAddJob = async ()=>{
-    const validation = mantine.validate();
-    if (!validation.hasErrors){
-     await AddJob(mantine.values, mantine.reset)
+  const handleAddJob = async () => {
+    const validation = mantine.validate()
+    if (!validation.hasErrors) {
+      await AddJob(mantine.values, mantine.reset)
     }
   }
-
 
   return (
     <>
@@ -62,7 +56,9 @@ const AddItemForm = ({
           label={"Company"}
           value={mantine.values.company}
           placeholder={"Company"}
-          onChange={(value) => mantine.setFieldValue("company", value as string)}
+          onChange={(value) =>
+            mantine.setFieldValue("company", value as string)
+          }
         />
         {mantine.errors.company && (
           <div className="text-red-500 text-sm">{mantine.errors.company}</div>
@@ -71,7 +67,9 @@ const AddItemForm = ({
           label={"Position"}
           value={mantine.values.position}
           placeholder={"Position"}
-          onChange={(value) => mantine.setFieldValue("position", value as string)}
+          onChange={(value) =>
+            mantine.setFieldValue("position", value as string)
+          }
         />
         {mantine.errors.position && (
           <div className="text-red-500 text-sm">{mantine.errors.position}</div>
@@ -90,10 +88,12 @@ const AddItemForm = ({
           label={"Note"}
           value={mantine.values.note}
           placeholder={"Note"}
-          onChange={(event) => mantine.setFieldValue("note", event.target.value)}
+          onChange={(event) =>
+            mantine.setFieldValue("note", event.target.value)
+          }
         />
         {mantine.errors.note && (
-            <div className="text-red-500 text-sm">{mantine.errors.note}</div>
+          <div className="text-red-500 text-sm">{mantine.errors.note}</div>
         )}
 
         <UniversalSelect
@@ -104,7 +104,7 @@ const AddItemForm = ({
           options={options}
         />
         {mantine.errors.status && (
-            <div className="text-red-500 text-sm">{mantine.errors.status}</div>
+          <div className="text-red-500 text-sm">{mantine.errors.status}</div>
         )}
 
         <div className="flex justify-end gap-2">

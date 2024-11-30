@@ -9,21 +9,18 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-const dbUri = process.env.MONGO_PUBLIC_URL; // Укажите ваш URI для MongoDB
+const dbUri = process.env.MONGO_PUBLIC_URL;
 
 if (!dbUri) {
     console.error("Ошибка: Строка подключения не найдена!");
-    process.exit(1);  // Завершаем выполнение, если строка подключения не найдена
+    process.exit(1);
 }
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Маршруты
 app.use(router);
 
-// Подключение к базе данных MongoDB
 mongoose
     .connect(dbUri)
     .then(() => {

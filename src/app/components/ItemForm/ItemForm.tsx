@@ -2,9 +2,15 @@
 
 import React from "react"
 import { Job } from "@/app/jobs/page"
+import { EditableField } from "@/app/components/EditableField/EditableField"
+import { useUpdateJob } from "@/app/hooks/useUpdateJob"
 
 const ItemForm = ({ job, deleteJob }: Props) => {
+  const { mutate: updateJob } = useUpdateJob()
 
+  const handleSave = ({ field, newValue }: handleSaveType) => {
+    updateJob({ ...job, [field]: newValue })
+  }
   return (
     <>
       <div
@@ -13,6 +19,13 @@ const ItemForm = ({ job, deleteJob }: Props) => {
       >
         <div className="flex justify-between items-center mb-2">
           <div>
+            <EditableField
+              value={job.company}
+              onSave={(value) =>
+                handleSave({ field: "company", newValue: value })
+              }
+            />
+
             <h2 className="font-semibold text-lg">{job.company}</h2>
             <p className="text-gray-600">{job.position}</p>
             <span className="text-sm text-teal-500">{job.status}</span>
@@ -41,4 +54,9 @@ export default ItemForm
 type Props = {
   job: Job
   deleteJob: (id: string) => void
+}
+
+type handleSaveType = {
+  field: keyof Job
+  newValue: string | number
 }

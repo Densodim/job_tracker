@@ -7,15 +7,16 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   try {
-    const { id } = params
+    const { id } = await params
 
     if (!id) {
       return new Response(JSON.stringify({ error: "ID не передан" }), {
         status: 400,
+        headers: { "Content-Type": "application/json" },
       })
     }
 
-    await axios.delete(`${API_URL}/jobs/${id}`)
+    await axios.delete(`${API_URL}/api/jobs/${id}`)
     return new Response(null, { status: 204 })
   } catch (error) {
     console.error("Ошибка при удалении вакансии:", error)

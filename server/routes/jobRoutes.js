@@ -5,8 +5,7 @@ import {Job} from "../models/job.js";
 
 export const router = express.Router();
 
-// Получить все вакансии
-router.get('/jobs', async (req, res) => {
+router.get('/api/jobs', async (req, res) => {
   try {
     const jobs = await Job.find();
     res.status(200).json(jobs);
@@ -15,8 +14,7 @@ router.get('/jobs', async (req, res) => {
   }
 });
 
-// Добавить новую вакансию
-router.post('/jobs', async (req, res) => {
+router.post('/api/jobs', async (req, res) => {
   const { company, position, salary, status, note } = req.body;
 
   const newJob = new Job({ company, position, salary, status, note });
@@ -30,7 +28,7 @@ router.post('/jobs', async (req, res) => {
 });
 
 
-router.put('/jobs/:id', async (req, res) => {
+router.put('/api/jobs/:id', async (req, res) => {
   const { id } = req.params;
   const { company, position, salary, status, note } = req.body;
 
@@ -50,7 +48,7 @@ router.put('/jobs/:id', async (req, res) => {
 });
 
 
-router.delete('/jobs/:id', async (req, res) => {
+router.delete('/api/jobs/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
