@@ -26,3 +26,25 @@ export async function DELETE(
     )
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const { _id, ...job } = await request.json()
+    if (!_id) {
+      return new Response(
+        JSON.stringify({ error: "ID вакансии не передано" }),
+        { status: 400 },
+      )
+    }
+    const response = await axios.put(`${API_URL}/api/jobs/${_id}`, job)
+
+    return new Response(JSON.stringify(response.data), { status: 200 })
+  } catch (error) {
+    console.error("Ошибка при обновлении вакансии:", error)
+
+    return new Response(
+      JSON.stringify({ error: "Не удалось обновить вакансию" }),
+      { status: 500 },
+    )
+  }
+}

@@ -12,7 +12,7 @@ export enum StatusJobs {
   Rejected = "REJECTED",
 }
 
-const options = [
+export const optionsSelect = [
   { value: StatusJobs.Applied, label: "Applied" },
   { value: StatusJobs.Interviewed, label: "Interviewed" },
   { value: StatusJobs.Rejected, label: "Rejected" },
@@ -101,7 +101,7 @@ const AddItemForm = ({ AddJob, setIsAdding }: Props) => {
           placeholder="Select job status"
           value={mantine.values.status}
           onChange={(value) => mantine.setFieldValue("status", value as string)}
-          options={options}
+          options={optionsSelect}
         />
         {mantine.errors.status && (
           <div className="text-red-500 text-sm">{mantine.errors.status}</div>

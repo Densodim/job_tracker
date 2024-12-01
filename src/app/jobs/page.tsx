@@ -3,11 +3,20 @@ import React, { Suspense, useState } from "react"
 import AddItemForm from "@/app/components/AddItemForm/AddItemForm"
 import { JobsInfo } from "@/app/components/Jobs-info"
 import { useAddJob } from "@/app/hooks/useAddJob"
+import { useShowNotification } from "@/app/hooks/useShowNotification"
 
 const JobPage = () => {
   const [isAdding, setIsAdding] = useState(false)
 
   const { mutate: addJob, isError, error, isPending, isSuccess } = useAddJob()
+
+  useShowNotification({
+    isSuccess,
+    isError,
+    error,
+    isPending,
+    messageIsSuccess: "Вакансия была успешно добавлена",
+  })
 
   const handleAddJob = async (newJobs: JobForm, resetForm: () => void) => {
     addJob(newJobs, {
@@ -33,14 +42,6 @@ const JobPage = () => {
 
         {isAdding && (
           <AddItemForm AddJob={handleAddJob} setIsAdding={setIsAdding} />
-        )}
-
-        {isError && (
-          <div className="text-red-500">Ошибка: {error?.message}</div>
-        )}
-        {isPending && <div className="text-blue-500">Добавление...</div>}
-        {isSuccess && (
-          <div className="text-blue-500">Вакансия добавлена успешно</div>
         )}
       </Suspense>
 

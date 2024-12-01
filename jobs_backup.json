@@ -1,6 +1,6 @@
 [
   {
-    "_id": "674b8a51ca7d01d571d3fa68",
+    "_id": "674c8bbefdf5e530d5c7863b",
     "company": "Google",
     "position": "Software Engineer",
     "salary": "100k-120k",
@@ -8,7 +8,7 @@
     "note": "Ожидаю ответа"
   },
   {
-    "_id": "674b8a51ca7d01d571d3fa69",
+    "_id": "674c8bbefdf5e530d5c7863c",
     "company": "Microsoft",
     "position": "Frontend Developer",
     "salary": "90k-110k",
@@ -16,7 +16,7 @@
     "note": "Интервью назначено на следующую неделю"
   },
   {
-    "_id": "674b8a51ca7d01d571d3fa6a",
+    "_id": "674c8bbefdf5e530d5c7863d",
     "company": "Amazon",
     "position": "Backend Developer",
     "salary": "110k-130k",

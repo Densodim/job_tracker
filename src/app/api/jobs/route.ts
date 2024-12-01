@@ -31,17 +31,3 @@ export async function POST(request: Request) {
     )
   }
 }
-
-export async function PUT(request: Request) {
-  try {
-    const { id, ...job } = await request.json()
-    const response = await axios.put(`${API_URL}/api/jobs/${id}`, job)
-    return new Response(JSON.stringify(response.data), { status: 200 })
-  } catch (error) {
-    console.error("Ошибка при обновлении вакансии:", error)
-    return new Response(
-      JSON.stringify({ error: "Не удалось обновить вакансию" }),
-      { status: 500 },
-    )
-  }
-}

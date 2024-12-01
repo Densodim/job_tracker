@@ -1,15 +1,37 @@
 "use client"
 
-import React from "react"
+import React, { Suspense } from "react"
 import { Job } from "@/app/jobs/page"
 import { EditableField } from "@/app/components/EditableField/EditableField"
 import { useUpdateJob } from "@/app/hooks/useUpdateJob"
+import { useShowNotification } from "@/app/hooks/useShowNotification"
+import { notifications } from "@mantine/notifications"
 
 const ItemForm = ({ job, deleteJob }: Props) => {
-  const { mutate: updateJob } = useUpdateJob()
+  const { data, isError, updateJob, isLoading, isSuccess, error } =
+    useUpdateJob()
 
-  const handleSave = ({ field, newValue }: handleSaveType) => {
-    updateJob({ ...job, [field]: newValue })
+  useShowNotification({ isError, error, isLoading })
+
+  const handleSave = async ({ field, newValue }: handleSaveType) => {
+    try {
+      await updateJob({ ...job, [field]: newValue })
+      notifications.show({
+        title: "Успешно обновлено",
+        message: `Поле "${field}" обновлено`,
+        color: "green",
+        autoClose: 5000,
+        position: "top-center",
+      })
+    } catch (error: any) {
+      notifications.show({
+        title: "Ошибка",
+        message: `Не удалось обновить: ${error.message}`,
+        color: "red",
+        autoClose: 5000,
+        position: "top-center",
+      })
+    }
   }
   return (
     <>
@@ -19,23 +41,45 @@ const ItemForm = ({ job, deleteJob }: Props) => {
       >
         <div className="flex justify-between items-center mb-2">
           <div>
-            <EditableField
-              value={job.company}
-              onSave={(value) =>
-                handleSave({ field: "company", newValue: value })
-              }
-            />
-
-            <h2 className="font-semibold text-lg">{job.company}</h2>
-            <p className="text-gray-600">{job.position}</p>
-            <span className="text-sm text-teal-500">{job.status}</span>
+            <Suspense fallback={<div>Loading...</div>}>
+              <h2>
+                <EditableField
+                  value={job.company}
+                  onSave={(value) =>
+                    handleSave({ field: "company", newValue: value })
+                  }
+                  style={"font-semibold text-lg"}
+                />
+              </h2>
+              <EditableField
+                value={job.position}
+                onSave={(value) =>
+                  handleSave({ field: "position", newValue: value })
+                }
+                style={"text-gray-600"}
+              />
+              <EditableField
+                value={job.status}
+                onSave={(value) =>
+                  handleSave({ field: "status", newValue: value })
+                }
+                style={"text-sm text-teal-500"}
+                type={"select"}
+              />
+            </Suspense>
           </div>
-          <p className="font-bold text-md">{job.salary}</p>
+          <Suspense fallback={<div>Loading...</div>}>
+            <EditableField
+              value={job.salary}
+              onSave={(value) =>
+                handleSave({ field: "salary", newValue: value })
+              }
+              style={"font-bold text-md"}
+              type={"number"}
+            />
+          </Suspense>
         </div>
         <div className="flex justify-end gap-2">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-            Edit
-          </button>
           <button
             onClick={() => deleteJob(job._id)}
             className="bg-red-500 text-white px-4 py-2 rounded-md"

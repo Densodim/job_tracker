@@ -1,9 +1,12 @@
 import React, { useState } from "react"
+import UniversalSelect from "@/app/components/Select/UniversalSelect"
+import {optionsSelect} from "@/app/components/AddItemForm/AddItemForm";
 
 export const EditableField: React.FC<EditableFieldProps> = ({
   value,
   onSave,
   type = "text",
+  style,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [inputValue, setInputValue] = useState(value)
@@ -27,7 +30,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({
     }
   }
 
-  return isEditing ? (
+  const renderInputField = () => (
     <input
       type={type}
       value={inputValue}
@@ -39,19 +42,44 @@ export const EditableField: React.FC<EditableFieldProps> = ({
       onKeyDown={handleKeyDown}
       className="border p-1 rounded w-full"
     />
-  ) : (
+  )
+
+  const renderSelectField = () => (
+    <UniversalSelect
+      value={String(inputValue)}
+      onChange={(newValue) => {
+        setInputValue(newValue)
+        onSave(newValue)
+        setIsEditing(false)
+      }}
+      options={optionsSelect || []}
+      placeholder="Select an option"
+    />
+  )
+
+  const renderDisplayValue = () => (
     <div
       onDoubleClick={() => setIsEditing(true)}
-      className="cursor-pointer p-1 hover:bg-gray-100 rounded"
+      className={`cursor-pointer p-1 hover:bg-gray-100 rounded ${style}`}
     >
       {value}
     </div>
   )
+
+  if (isEditing) {
+    if (type === "select") {
+      return renderSelectField()
+    }
+    return renderInputField()
+  }
+
+  return renderDisplayValue()
 }
 
 //type
 type EditableFieldProps = {
   value: string | number
   onSave: (newValue: string | number) => void
-  type?: "text" | "number"
+  type?: "text" | "number" | "select"
+  style: string
 }

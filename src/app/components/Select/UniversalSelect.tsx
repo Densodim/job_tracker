@@ -7,6 +7,7 @@ const UniversalSelect: FC<Props> = ({
   value,
   onChange,
   options,
+  ...rest
 }) => {
   return (
     <div className="mb-4">
@@ -14,6 +15,7 @@ const UniversalSelect: FC<Props> = ({
         <label className="block text-gray-700 font-medium mb-1">{label}</label>
       )}
       <Select
+        {...rest}
         data={options}
         value={value}
         onChange={(newValue) => onChange(newValue || "")}
