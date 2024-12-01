@@ -2,13 +2,15 @@
 import React, { useEffect, useState } from "react"
 import { CloseButton, Input } from "@mantine/core"
 
-const UniversalInput = ({
+function UniversalInput ({
   label,
   value,
   placeholder,
   type = "text",
   onChange,
-}: Props) => {
+  onBlur,
+  onKeyDown,
+}: Props) {
   const [inputValue, setInputValue] = useState(value)
 
   useEffect(() => {
@@ -31,11 +33,8 @@ const UniversalInput = ({
             ? onChange(Number(e.target.value))
             : onChange(e.target.value)
         }
-        onBlur={(e) =>
-          type === "number"
-            ? onChange(Number(e.target.value))
-            : onChange(e.target.value)
-        }
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
         className="w-full border-gray-300 rounded-md p-1 focus:ring-2 focus:ring-blue-500"
         placeholder={placeholder}
         rightSectionPointerEvents="all"
@@ -55,9 +54,11 @@ export default UniversalInput
 
 //type
 type Props = {
-  label: string
+  label?: string
   value: string | number
   placeholder?: string
-  type?: "text" | "number"
+  type?: "text" | "number" | "select"
   onChange: (value: string | number) => void
+  onBlur?: () => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }

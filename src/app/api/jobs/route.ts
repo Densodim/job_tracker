@@ -22,11 +22,21 @@ export async function POST(request: Request) {
   try {
     const job = await request.json()
     const response = await axios.post(`${API_URL}/api/jobs`, job)
-    return new Response(JSON.stringify(response.data), { status: 201 })
-  } catch (error) {
-    console.error("Ошибка при добавлении вакансии:", error)
+
+    if (response.status === 201) {
+      return new Response(JSON.stringify(response.data), { status: 201 })
+    }
+
+    throw new Error("API returned an unexpected status")
+  } catch (error: any) {
+    console.error(
+      "Ошибка при добавлении вакансии:",
+      error.response?.data || error.message,
+    )
     return new Response(
-      JSON.stringify({ error: "Не удалось добавить вакансию" }),
+      JSON.stringify({
+        error: error.response?.data?.message || "Не удалось добавить вакансию",
+      }),
       { status: 500 },
     )
   }

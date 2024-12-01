@@ -1,6 +1,6 @@
 import { notifications } from "@mantine/notifications"
 
-const showNotification = ({ title, message, color }: Props) => {
+function showNotification ({ title, message, color }: Props) {
   notifications.show({
     title,
     message,

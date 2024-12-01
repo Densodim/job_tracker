@@ -11,21 +11,21 @@ const testJobs = [
     {
         company: "Google",
         position: "Software Engineer",
-        salary: "100k-120k",
+        salary: "100",
         status: "Applied",
         note: "Ожидаю ответа",
     },
     {
         company: "Microsoft",
         position: "Frontend Developer",
-        salary: "90k-110k",
+        salary: "90",
         status: "Interviewed",
         note: "Интервью назначено на следующую неделю",
     },
     {
         company: "Amazon",
         position: "Backend Developer",
-        salary: "110k-130k",
+        salary: "110",
         status: "Rejected",
         note: "Причина отказа неизвестна",
     },
@@ -47,6 +47,6 @@ mongoose.connect(dbUri).then(async () => {
     } catch (error) {
         console.error("Ошибка:", error);
     } finally {
-        mongoose.disconnect();
+        await mongoose.disconnect();
     }
 });

@@ -1,13 +1,15 @@
 import React, { useState } from "react"
 import UniversalSelect from "@/app/components/Select/UniversalSelect"
-import {optionsSelect} from "@/app/components/AddItemForm/AddItemForm";
+import { optionsSelect } from "@/app/components/AddItemForm/AddItemForm"
 
-export const EditableField: React.FC<EditableFieldProps> = ({
+import UniversalInput from "@/app/components/Input/UniversalInput"
+
+function EditableField({
   value,
   onSave,
   type = "text",
   style,
-}) => {
+}: EditableFieldProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [inputValue, setInputValue] = useState(value)
 
@@ -31,16 +33,13 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   }
 
   const renderInputField = () => (
-    <input
+    <UniversalInput
       type={type}
       value={inputValue}
-      autoFocus
+      placeholder={"enter data"}
+      onChange={setInputValue}
       onBlur={handleBlur}
-      onChange={(e) =>
-        setInputValue(type === "number" ? +e.target.value : e.target.value)
-      }
       onKeyDown={handleKeyDown}
-      className="border p-1 rounded w-full"
     />
   )
 
@@ -75,6 +74,8 @@ export const EditableField: React.FC<EditableFieldProps> = ({
 
   return renderDisplayValue()
 }
+
+export default EditableField
 
 //type
 type EditableFieldProps = {

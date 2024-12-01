@@ -1,22 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
 import { BASE_URL } from "@/app/hooks/useJobsQuery"
-import { Job } from "@/app/jobs/page"
+import useJobs from "@/app/hooks/useJobs"
 
 export function useUpdateJob() {
-  const query = useSuspenseQuery({
-    queryKey: ["jobs"],
-    queryFn: async () => {
-      const path = "/api/jobs"
-      const url = BASE_URL + path
-
-      const res: Job[] = await (
-        await fetch(url, {
-          cache: "no-store",
-        })
-      ).json()
-      return res
-    },
-  })
+  const query = useJobs()
 
   const updateJob = async (updatedJob: { _id: string; [key: string]: any }) => {
     const response = await fetch(`${BASE_URL}/api/jobs/${updatedJob._id}`, {

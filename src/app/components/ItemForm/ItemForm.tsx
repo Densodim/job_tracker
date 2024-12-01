@@ -2,12 +2,12 @@
 
 import React, { Suspense } from "react"
 import { Job } from "@/app/jobs/page"
-import { EditableField } from "@/app/components/EditableField/EditableField"
 import { useUpdateJob } from "@/app/hooks/useUpdateJob"
 import { useShowNotification } from "@/app/hooks/useShowNotification"
 import { notifications } from "@mantine/notifications"
+import EditableField from "@/app/components/EditableField/EditableField"
 
-const ItemForm = ({ job, deleteJob }: Props) => {
+function ItemForm ({ job, deleteJob }: Props){
   const { data, isError, updateJob, isLoading, isSuccess, error } =
     useUpdateJob()
 
@@ -67,16 +67,28 @@ const ItemForm = ({ job, deleteJob }: Props) => {
                 type={"select"}
               />
             </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <EditableField
+                value={job.note}
+                onSave={(value) =>
+                  handleSave({ field: "note", newValue: value })
+                }
+                style={"text-gray-600 font-semibold text-lg"}
+              />
+            </Suspense>
           </div>
           <Suspense fallback={<div>Loading...</div>}>
-            <EditableField
-              value={job.salary}
-              onSave={(value) =>
-                handleSave({ field: "salary", newValue: value })
-              }
-              style={"font-bold text-md"}
-              type={"number"}
-            />
+            <div className="flex justify-between items-center mb-2">
+              <EditableField
+                value={job.salary}
+                onSave={(value) =>
+                  handleSave({ field: "salary", newValue: value })
+                }
+                style={"font-bold text-md"}
+                type={"number"}
+              />
+              <p>$</p>
+            </div>
           </Suspense>
         </div>
         <div className="flex justify-end gap-2">

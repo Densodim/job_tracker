@@ -1,14 +1,14 @@
 import React, { FC } from "react"
 import { Select } from "@mantine/core"
 
-const UniversalSelect: FC<Props> = ({
+function UniversalSelect({
   label,
   placeholder = "Select an option",
   value,
   onChange,
   options,
   ...rest
-}) => {
+}:Props) {
   return (
     <div className="mb-4">
       {label && (

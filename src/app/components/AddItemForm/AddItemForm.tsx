@@ -18,7 +18,7 @@ export const optionsSelect = [
   { value: StatusJobs.Rejected, label: "Rejected" },
 ]
 
-const AddItemForm = ({ AddJob, setIsAdding }: Props) => {
+function AddItemForm ({ AddJob, setIsAdding }: Props) {
   const mantine = useForm({
     initialValues: {
       company: "",

@@ -1,17 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { BASE_URL } from "@/app/hooks/useJobsQuery"
+import { JobForm } from "@/app/jobs/page"
 
-export const useAddJob = () => {
+function useAddJob () {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (newJob: {
-      company: string
-      position: string
-      salary: number
-      status: string
-      note: string
-    }) => {
+    mutationFn: async (newJob: JobForm) => {
       const response = await fetch(`${BASE_URL}/api/jobs`, {
         method: "POST",
         headers: {
@@ -34,3 +29,4 @@ export const useAddJob = () => {
     },
   })
 }
+export default useAddJob

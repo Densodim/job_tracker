@@ -1,11 +1,11 @@
 "use client"
 import React, { Suspense, useState } from "react"
 import AddItemForm from "@/app/components/AddItemForm/AddItemForm"
-import { JobsInfo } from "@/app/components/Jobs-info"
-import { useAddJob } from "@/app/hooks/useAddJob"
 import { useShowNotification } from "@/app/hooks/useShowNotification"
+import JobsInfo from "@/app/components/Jobs-info"
+import useAddJob from "@/app/hooks/useAddJob"
 
-const JobPage = () => {
+function JobPage() {
   const [isAdding, setIsAdding] = useState(false)
 
   const { mutate: addJob, isError, error, isPending, isSuccess } = useAddJob()
