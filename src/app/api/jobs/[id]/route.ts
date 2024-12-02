@@ -1,9 +1,10 @@
 import axios from "axios"
+import {NextApiRequest} from "next";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL
 
 export async function DELETE(
-  request: Request,
+  request: NextApiRequest,
   { params }: { params: { id: string } },
 ) {
   try {
