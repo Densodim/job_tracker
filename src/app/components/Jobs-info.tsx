@@ -3,7 +3,7 @@ import ItemForm from "@/app/components/ItemForm/ItemForm"
 import { Job } from "@/app/jobs/page"
 import { useShowNotification } from "@/app/hooks/useShowNotification"
 import useDeleteJob from "@/app/hooks/useDeleteJob"
-import useJobsQuery from "@/app/hooks/useJobsQuery";
+import useJobsQuery from "@/app/hooks/useJobsQuery"
 
 function JobsInfo() {
   const { jobs } = useJobsQuery()

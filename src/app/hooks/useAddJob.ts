@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { BASE_URL } from "@/app/hooks/useJobsQuery"
 import { JobForm } from "@/app/jobs/page"
 
-function useAddJob () {
+function useAddJob() {
   const queryClient = useQueryClient()
 
   return useMutation({

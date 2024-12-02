@@ -1,8 +1,8 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, {ChangeEvent, useEffect, useState} from "react"
 import { CloseButton, Input } from "@mantine/core"
 
-function UniversalInput ({
+function UniversalInput({
   label,
   value,
   placeholder,
@@ -58,7 +58,7 @@ type Props = {
   value: string | number
   placeholder?: string
   type?: "text" | "number" | "select"
-  onChange: (value: string | number) => void
+  onChange: (value: string | number | ChangeEvent<HTMLInputElement>) => void
   onBlur?: () => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }

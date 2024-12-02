@@ -7,7 +7,7 @@ import { useShowNotification } from "@/app/hooks/useShowNotification"
 import { notifications } from "@mantine/notifications"
 import EditableField from "@/app/components/EditableField/EditableField"
 
-function ItemForm ({ job, deleteJob }: Props){
+function ItemForm({ job, deleteJob }: Props) {
   const { data, isError, updateJob, isLoading, isSuccess, error } =
     useUpdateJob()
 

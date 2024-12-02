@@ -8,7 +8,7 @@ function UniversalSelect({
   onChange,
   options,
   ...rest
-}:Props) {
+}: Props) {
   return (
     <div className="mb-4">
       {label && (
