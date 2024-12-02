@@ -8,7 +8,7 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   try {
-    const { id } = await params
+    const { id } = params
 
     if (!id) {
       return new Response(JSON.stringify({ error: "ID не передан" }), {
