@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
+import type {Meta, StoryObj} from "@storybook/react"
+import {fn} from "@storybook/test"
 import UniversalInput from "@/app/components/Input/UniversalInput"
-import { MantineProvider } from "@mantine/core"
+import {MantineProvider} from "@mantine/core"
 import {theme} from "@/app/components/style/theme";
 import '@mantine/core/styles.css';
-import {ChangeEvent, useState} from "react";
 import useInputChangeStorybook from "@/app/hooks/Storybook/useInputChangeStorybook";
 
 const meta = {
