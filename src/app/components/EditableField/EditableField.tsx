@@ -79,7 +79,7 @@ export default EditableField
 
 //type
 type EditableFieldProps = {
-  value: string | number
+  value: string | number | any
   onSave: (newValue: string | number) => void
   type?: "text" | "number" | "select"
   style: string

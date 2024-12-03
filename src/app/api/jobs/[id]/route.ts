@@ -5,10 +5,10 @@ const API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const { id } = params
+    const { id } = await params
 
     if (!id) {
       return new Response(JSON.stringify({ error: "ID не передан" }), {
