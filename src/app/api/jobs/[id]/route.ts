@@ -1,8 +1,7 @@
 import axios from "axios"
 import {NextRequest} from "next/server";
-import {API_URL} from "@/app/api/jobs/route";
 
-
+const API_URL = process.env.NEXT_PUBLIC_BACKEND
 
 export async function DELETE(
   request: NextRequest,

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const API_URL = process.env.NEXT_PUBLIC_BACKEND
+const API_URL = process.env.NEXT_PUBLIC_BACKEND
 
 export async function GET() {
   try {
