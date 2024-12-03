@@ -9,7 +9,10 @@ export async function GET() {
     const response = await axios.get(`${API_URL}/api/jobs`)
     return new Response(JSON.stringify(response.data), {
       status: 200,
-      headers: {Authorization: `Bearer ${process.env.API_TOKEN}`},
+      headers: {
+        Authorization: `Bearer ${process.env.API_TOKEN}`,
+        'Cache-Control': 'no-cache',
+      },
 
     })
   } catch (error) {
