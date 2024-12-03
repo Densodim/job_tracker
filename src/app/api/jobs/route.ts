@@ -2,12 +2,15 @@ import axios from "axios"
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND
 
+console.log(API_URL)
+
 export async function GET() {
   try {
     const response = await axios.get(`${API_URL}/api/jobs`)
     return new Response(JSON.stringify(response.data), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: {Authorization: `Bearer ${process.env.API_TOKEN}`},
+
     })
   } catch (error) {
     console.error("Ошибка при получении данных:", error)
