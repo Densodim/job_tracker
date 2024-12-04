@@ -4,6 +4,7 @@ const API_URL = process.env.NEXT_PUBLIC_BACKEND
 
 console.log(API_URL)
 
+
 export async function GET() {
   try {
     const response = await axios.get(`${API_URL}/api/jobs`, {
