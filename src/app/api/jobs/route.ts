@@ -35,7 +35,8 @@ export async function POST(request: Request) {
         headers: {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache",
-        }})
+        }
+      })
     }
 
     throw new Error("API returned an unexpected status")

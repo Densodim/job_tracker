@@ -54,7 +54,13 @@ export async function PUT(request: Request) {
     }
     const response = await axios.put(`${API_URL}/api/jobs/${_id}`,  job, {withCredentials: true})
 
-    return new Response(JSON.stringify(response.data), { status: 200, })
+    return new Response(JSON.stringify(response.data), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      }
+    })
   } catch (error) {
     console.error("Ошибка при обновлении вакансии:", error)
 
