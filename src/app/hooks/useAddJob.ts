@@ -3,6 +3,9 @@ import { BASE_URL } from "@/app/hooks/useJobsQuery"
 import { JobForm } from "@/app/jobs/page"
 
 function useAddJob() {
+
+  console.log("API URL:", `${BASE_URL}/api/jobs`);
+
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -13,9 +16,13 @@ function useAddJob() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newJob),
+        credentials: 'include',
       })
       if (!response.ok) throw new Error("Error creating job")
-      return response.json()
+
+      const data = await response.json();
+      console.log("Response data:", data);
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -25,6 +32,7 @@ function useAddJob() {
       })
     },
     onError: (error: any) => {
+      console.log(error)
       console.error("Ошибка добавления вакансии:", error.message)
     },
   })
