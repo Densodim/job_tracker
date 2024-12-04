@@ -17,7 +17,9 @@ export async function DELETE(
       })
     }
 
-    await axios.delete(`${API_URL}/api/jobs/${id}`)
+    await axios.delete(`${API_URL}/api/jobs/${id}`, {
+      withCredentials: true
+    })
     return new Response(null, { status: 204 })
   } catch (error) {
     console.error("Ошибка при удалении вакансии:", error)
@@ -37,7 +39,9 @@ export async function PUT(request: Request) {
         { status: 400 },
       )
     }
-    const response = await axios.put(`${API_URL}/api/jobs/${_id}`, job)
+    const response = await axios.put(`${API_URL}/api/jobs/${_id}`, {
+      withCredentials: true
+    },  job)
 
     return new Response(JSON.stringify(response.data), { status: 200 })
   } catch (error) {

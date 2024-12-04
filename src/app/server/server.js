@@ -17,7 +17,13 @@ if (!dbUri) {
     process.exit(1);
 }
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: ['http://localhost:3000'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true
+    }
+));
 app.use(bodyParser.json());
 
 app.use(router);

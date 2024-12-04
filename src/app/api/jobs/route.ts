@@ -6,12 +6,14 @@ console.log(API_URL)
 
 export async function GET() {
   try {
-    const response = await axios.get(`${API_URL}/api/jobs`)
+    const response = await axios.get(`${API_URL}/api/jobs`, {
+      withCredentials: true
+    })
     return new Response(JSON.stringify(response.data), {
       status: 200,
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`,
-        'Cache-Control': 'no-cache',
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
       },
 
     })
@@ -27,7 +29,9 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const job = await request.json()
-    const response = await axios.post(`${API_URL}/api/jobs`, job)
+    const response = await axios.post(`${API_URL}/api/jobs`,{
+      withCredentials: true
+    }, job)
 
     if (response.status === 201) {
       return new Response(JSON.stringify(response.data), { status: 201 })
