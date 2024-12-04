@@ -4,7 +4,6 @@ import { JobForm } from "@/app/jobs/page"
 
 function useAddJob() {
 
-  console.log("API URL:", `${BASE_URL}/api/jobs`);
 
   const queryClient = useQueryClient()
 
@@ -21,7 +20,6 @@ function useAddJob() {
       if (!response.ok) throw new Error("Error creating job")
 
       const data = await response.json();
-      console.log("Response data:", data);
       return data;
     },
     onSuccess: () => {

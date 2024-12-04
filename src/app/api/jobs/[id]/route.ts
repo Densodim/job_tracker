@@ -1,5 +1,5 @@
 import axios from "axios"
-import {NextRequest} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND
 
@@ -21,7 +21,7 @@ export async function DELETE(
     }
 
     await axios.delete(`${API_URL}/api/jobs/${id}`, {withCredentials: true})
-    return new Response(null, {
+    return new NextResponse(null, {
       status: 204,
       headers: {
         "Content-Type": "application/json",
