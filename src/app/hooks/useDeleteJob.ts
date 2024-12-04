@@ -9,6 +9,7 @@ function useDeleteJob() {
       const response = await fetch(`${BASE_URL}/api/jobs/${_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
       })
       if (!response.ok) {
         throw new Error("Error during deletion")

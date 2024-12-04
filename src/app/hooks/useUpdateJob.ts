@@ -11,6 +11,7 @@ export function useUpdateJob() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedJob),
+      credentials: 'include',
     })
 
     if (!response.ok) {
