@@ -13,14 +13,21 @@ export async function DELETE(
     if (!id) {
       return new Response(JSON.stringify({ error: "ID не передан" }), {
         status: 400,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
       })
     }
 
-    await axios.delete(`${API_URL}/api/jobs/${id}`, {
-      withCredentials: true
+    await axios.delete(`${API_URL}/api/jobs/${id}`, {withCredentials: true})
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
     })
-    return new Response(null, { status: 204 })
   } catch (error) {
     console.error("Ошибка при удалении вакансии:", error)
     return new Response(
@@ -36,20 +43,30 @@ export async function PUT(request: Request) {
     if (!_id) {
       return new Response(
         JSON.stringify({ error: "ID вакансии не передано" }),
-        { status: 400 },
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        },
       )
     }
-    const response = await axios.put(`${API_URL}/api/jobs/${_id}`, {
-      withCredentials: true
-    },  job)
+    const response = await axios.put(`${API_URL}/api/jobs/${_id}`,  job, {withCredentials: true})
 
-    return new Response(JSON.stringify(response.data), { status: 200 })
+    return new Response(JSON.stringify(response.data), { status: 200, })
   } catch (error) {
     console.error("Ошибка при обновлении вакансии:", error)
 
     return new Response(
       JSON.stringify({ error: "Не удалось обновить вакансию" }),
-      { status: 500 },
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
+      },
     )
   }
 }
