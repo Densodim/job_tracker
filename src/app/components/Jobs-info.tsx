@@ -10,8 +10,8 @@ function JobsInfo() {
 
   const { mutate: deleteJob, isSuccess, isError, error } = useDeleteJob()
 
-  const handleDeleteJob = async (_id: string) => {
-    deleteJob(_id)
+  const handleDeleteJob = async (id: string) => {
+    deleteJob(id)
   }
   useShowNotification({
     isSuccess,
@@ -24,7 +24,7 @@ function JobsInfo() {
     <div>
       {jobs.map((item: Job) => {
         return (
-          <div key={item._id}>
+          <div key={item.id}>
             <ItemForm job={item} deleteJob={handleDeleteJob} />
           </div>
         )

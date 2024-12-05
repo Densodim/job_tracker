@@ -56,7 +56,7 @@ export default JobPage
 
 // type
 export type Job = {
-  _id: string
+  id: string
   company: string
   position: string
   salary: number
@@ -64,4 +64,4 @@ export type Job = {
   note: string
 }
 
-export type JobForm = Omit<Job, "_id">
+export type JobForm = Omit<Job, "id">
