@@ -36,7 +36,7 @@ function ItemForm({ job, deleteJob }: Props) {
   return (
     <>
       <div
-        key={job.id}
+        key={job._id}
         className="bg-white border border-gray-300 rounded-lg p-4 mb-4 shadow"
       >
         <div className="flex justify-between items-center mb-2">
@@ -93,7 +93,7 @@ function ItemForm({ job, deleteJob }: Props) {
         </div>
         <div className="flex justify-end gap-2">
           <button
-            onClick={() => deleteJob(job.id)}
+            onClick={() => deleteJob(job._id)}
             className="bg-red-500 text-white px-4 py-2 rounded-md"
           >
             Delete

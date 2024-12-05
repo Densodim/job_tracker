@@ -24,7 +24,7 @@ function JobsInfo() {
     <div>
       {jobs.map((item: Job) => {
         return (
-          <div key={item.id}>
+          <div key={item._id}>
             <ItemForm job={item} deleteJob={handleDeleteJob} />
           </div>
         )

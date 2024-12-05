@@ -4,8 +4,8 @@ import useJobs from "@/app/hooks/useJobs"
 export function useUpdateJob() {
   const query = useJobs()
 
-  const updateJob = async (updatedJob: {id: string; [key: string]: any }) => {
-    const response = await fetch(`${BASE_URL}/api/jobs/${updatedJob.id}`, {
+  const updateJob = async (updatedJob: {_id: string; [key: string]: any }) => {
+    const response = await fetch(`${BASE_URL}/api/jobs/${updatedJob._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
