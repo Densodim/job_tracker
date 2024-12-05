@@ -5,8 +5,8 @@ function useDeleteJob() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (_id: string) => {
-      const response = await fetch(`${BASE_URL}/api/jobs/${_id}`, {
+    mutationFn: async (id: string) => {
+      const response = await fetch(`${BASE_URL}/api/jobs/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: 'include',
