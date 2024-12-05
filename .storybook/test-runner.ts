@@ -6,7 +6,6 @@ const config: TestRunnerConfig = {
         expect.extend({ toMatchImageSnapshot })
     },
     postRender: async (page, context) => {
-        // Add a post-render delay in case page is still animating
         await new Promise((resolve) => setTimeout(resolve, 500))
         const screenshot = await page.screenshot()
         expect(screenshot).toMatchImageSnapshot({})
