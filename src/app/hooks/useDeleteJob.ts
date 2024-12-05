@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-
 function useDeleteJob() {
   const queryClient = useQueryClient()
 
@@ -9,7 +8,7 @@ function useDeleteJob() {
       const response = await fetch(`/api/jobs/${_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
+        credentials: "include",
       })
       if (!response.ok) {
         throw new Error("Error during deletion")

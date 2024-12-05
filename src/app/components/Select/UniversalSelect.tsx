@@ -1,5 +1,5 @@
 import React from "react"
-import {Select} from "@mantine/core"
+import { Select } from "@mantine/core"
 
 function UniversalSelect({
   label,

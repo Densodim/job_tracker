@@ -1,5 +1,5 @@
 "use client"
-import React, {ChangeEvent, useEffect, useState} from "react"
+import React, { ChangeEvent, useEffect, useState } from "react"
 import { CloseButton, Input } from "@mantine/core"
 
 function UniversalInput({

@@ -1,10 +1,10 @@
-import type {Meta, StoryObj} from "@storybook/react"
-import {fn} from "@storybook/test"
+import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
 import UniversalInput from "@/app/components/Input/UniversalInput"
-import {MantineProvider} from "@mantine/core"
-import {theme} from "@/app/components/style/theme";
-import '@mantine/core/styles.css';
-import useInputChangeStorybook from "@/app/hooks/Storybook/useInputChangeStorybook";
+import { MantineProvider } from "@mantine/core"
+import { theme } from "@/app/components/style/theme"
+import "@mantine/core/styles.css"
+import useInputChangeStorybook from "@/app/hooks/Storybook/useInputChangeStorybook"
 
 const meta = {
   title: "Jobs/Universal Input",
@@ -40,13 +40,14 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   render: (args) => {
-    const {value, handleChange} = useInputChangeStorybook(args.value, args.onChange);
+    const { value, handleChange } = useInputChangeStorybook(
+      args.value,
+      args.onChange,
+    )
     return (
-        <MantineProvider theme={theme} >
-          <UniversalInput {...args}
-                          value={value}
-                          onChange={handleChange}/>
-        </MantineProvider>
+      <MantineProvider theme={theme}>
+        <UniversalInput {...args} value={value} onChange={handleChange} />
+      </MantineProvider>
     )
   },
   args: {
@@ -58,12 +59,13 @@ export const Primary: Story = {
 
 export const NumberInput: Story = {
   render: (args) => {
-    const {value, handleChange} = useInputChangeStorybook(args.value, args.onChange);
+    const { value, handleChange } = useInputChangeStorybook(
+      args.value,
+      args.onChange,
+    )
     return (
       <MantineProvider theme={theme}>
-        <UniversalInput {...args}
-                        value={value}
-                        onChange={handleChange}/>
+        <UniversalInput {...args} value={value} onChange={handleChange} />
       </MantineProvider>
     )
   },
@@ -77,13 +79,14 @@ export const NumberInput: Story = {
 
 export const WithClearButton: Story = {
   render: (args) => {
-    const {value, handleChange} = useInputChangeStorybook(args.value, args.onChange);
+    const { value, handleChange } = useInputChangeStorybook(
+      args.value,
+      args.onChange,
+    )
     return (
-        <MantineProvider theme={theme} >
-          <UniversalInput {...args}
-                          value={value}
-                          onChange={handleChange}/>
-        </MantineProvider>
+      <MantineProvider theme={theme}>
+        <UniversalInput {...args} value={value} onChange={handleChange} />
+      </MantineProvider>
     )
   },
   args: {
@@ -92,5 +95,3 @@ export const WithClearButton: Story = {
     placeholder: "Click to clear",
   },
 }
-
-

@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_BACKEND
 export async function GET() {
   try {
     const response = await axios.get(`${API_URL}/api/jobs`, {
-      withCredentials: true
+      withCredentials: true,
     })
     return new Response(JSON.stringify(response.data), {
       status: 200,
@@ -27,7 +27,9 @@ export async function POST(request: Request) {
   try {
     const job = await request.json()
 
-    const response = await axios.post(`${API_URL}/api/jobs`, job,{withCredentials: true})
+    const response = await axios.post(`${API_URL}/api/jobs`, job, {
+      withCredentials: true,
+    })
 
     if (response.status === 201) {
       return new Response(JSON.stringify(response.data), {
@@ -35,7 +37,7 @@ export async function POST(request: Request) {
         headers: {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache",
-        }
+        },
       })
     }
 

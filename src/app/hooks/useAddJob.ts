@@ -3,8 +3,6 @@ import { BASE_URL } from "@/app/hooks/useJobsQuery"
 import { JobForm } from "@/app/jobs/page"
 
 function useAddJob() {
-
-
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -15,12 +13,12 @@ function useAddJob() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newJob),
-        credentials: 'include',
+        credentials: "include",
       })
       if (!response.ok) throw new Error("Error creating job")
 
-      const data = await response.json();
-      return data;
+      const data = await response.json()
+      return data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

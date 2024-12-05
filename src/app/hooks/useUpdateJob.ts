@@ -8,14 +8,14 @@ import useJobs from "@/app/hooks/useJobs"
 export function useUpdateJob() {
   const query = useJobs()
 
-  const updateJob = async (updatedJob: {_id: string; [key: string]: any }) => {
+  const updateJob = async (updatedJob: { _id: string; [key: string]: any }) => {
     const response = await fetch(`/api/jobs/${updatedJob._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedJob),
-      credentials: 'include',
+      credentials: "include",
     })
 
     if (!response.ok) {

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const jobSchema = new mongoose.Schema({
   company: { type: String, required: true },
@@ -6,15 +6,13 @@ const jobSchema = new mongoose.Schema({
   salary: { type: Number, required: true },
   status: { type: String, required: true },
   note: { type: String, required: false },
-});
+})
 
-jobSchema.pre('save', function(next) {
-  if (typeof this.salary === 'string') {
-    this.salary = parseFloat(this.salary);
+jobSchema.pre("save", function (next) {
+  if (typeof this.salary === "string") {
+    this.salary = parseFloat(this.salary)
   }
-  next();
-});
+  next()
+})
 
-export const Job = mongoose.model('Job', jobSchema);
-
-
+export const Job = mongoose.model("Job", jobSchema)
