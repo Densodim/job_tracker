@@ -1,15 +1,15 @@
 import useJobs from "@/app/hooks/useJobs"
 
-const isProduction = process.env.NODE_ENV === 'production';
-export const BASE_URL = isProduction
-    ? process.env.NEXT_PUBLIC
-    : 'http://localhost:3000';
+// const isProduction = process.env.NODE_ENV === 'production';
+// export const BASE_URL = isProduction
+//     ? process.env.NEXT_PUBLIC
+//     : 'http://localhost:3000';
 
 export function useUpdateJob() {
   const query = useJobs()
 
   const updateJob = async (updatedJob: {_id: string; [key: string]: any }) => {
-    const response = await fetch(`${BASE_URL}/api/jobs/${updatedJob._id}`, {
+    const response = await fetch(`/api/jobs/${updatedJob._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
