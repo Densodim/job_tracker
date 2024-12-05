@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { BASE_URL } from "@/app/hooks/useJobsQuery"
+
 
 function useDeleteJob() {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (_id: string) => {
-      const response = await fetch(`${BASE_URL}/api/jobs/${_id}`, {
+      const response = await fetch(`/api/jobs/${_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: 'include',

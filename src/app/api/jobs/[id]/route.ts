@@ -11,7 +11,7 @@ export async function DELETE(
     const { id } = await params
 
     if (!id) {
-      return new Response(JSON.stringify({ error: "ID не передан" }), {
+      return new NextResponse(JSON.stringify({ error: "ID не передан" }), {
         status: 400,
         headers: {
           "Content-Type": "application/json",
