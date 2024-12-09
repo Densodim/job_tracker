@@ -1,6 +1,6 @@
+"use client"
 import { useEffect } from "react"
-import {showNotification} from "@mantine/notifications";
-
+import { showNotification } from "@mantine/notifications"
 
 const useShowNotification = ({
   isLoading,

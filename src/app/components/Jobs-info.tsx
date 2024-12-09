@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import ItemForm from "@/app/components/ItemForm/ItemForm"
 import { Job } from "@/app/jobs/page"
 import { useShowNotification } from "@/app/hooks/useShowNotification"
@@ -10,7 +10,7 @@ function JobsInfo() {
 
   const { mutate: deleteJob, isSuccess, isError, error } = useDeleteJob()
 
-  const handleDeleteJob = async (id: string) => {
+  const handleDeleteJob = (id: string) => {
     deleteJob(id)
   }
   useShowNotification({
@@ -21,15 +21,17 @@ function JobsInfo() {
   })
 
   return (
-    <div>
-      {jobs.map((item: Job) => {
-        return (
-          <div key={item._id}>
-            <ItemForm job={item} deleteJob={handleDeleteJob} />
-          </div>
-        )
-      })}
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>
+        {jobs.map((item: Job) => {
+          return (
+            <div key={item._id}>
+              <ItemForm job={item} deleteJob={handleDeleteJob} />
+            </div>
+          )
+        })}
+      </div>
+    </Suspense>
   )
 }
 

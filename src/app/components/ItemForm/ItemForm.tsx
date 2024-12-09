@@ -1,5 +1,3 @@
-"use client"
-
 import React, { Suspense } from "react"
 import { Job } from "@/app/jobs/page"
 import { useUpdateJob } from "@/app/hooks/useUpdateJob"
@@ -13,9 +11,9 @@ function ItemForm({ job, deleteJob }: Props) {
 
   useShowNotification({ isError, error, isLoading })
 
-  const handleSave = async ({ field, newValue }: handleSaveType) => {
+  const handleSave = ({ field, newValue }: handleSaveType) => {
     try {
-      await updateJob({ ...job, [field]: newValue })
+      updateJob({ ...job, [field]: newValue })
       notifications.show({
         title: "Успешно обновлено",
         message: `Поле "${field}" обновлено`,
@@ -35,13 +33,13 @@ function ItemForm({ job, deleteJob }: Props) {
   }
   return (
     <>
-      <div
-        key={job._id}
-        className="bg-white border border-gray-300 rounded-lg p-4 mb-4 shadow"
-      >
-        <div className="flex justify-between items-center mb-2">
-          <div>
-            <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div
+          key={job._id}
+          className="bg-white border border-gray-300 rounded-lg p-4 mb-4 shadow"
+        >
+          <div className="flex justify-between items-center mb-2">
+            <div>
               <h2>
                 <EditableField
                   value={job.company}
@@ -66,8 +64,7 @@ function ItemForm({ job, deleteJob }: Props) {
                 style={"text-sm text-teal-500"}
                 type={"select"}
               />
-            </Suspense>
-            <Suspense fallback={<div>Loading...</div>}>
+
               <EditableField
                 value={job.note}
                 onSave={(value) =>
@@ -75,9 +72,7 @@ function ItemForm({ job, deleteJob }: Props) {
                 }
                 style={"text-gray-600 font-semibold text-lg"}
               />
-            </Suspense>
-          </div>
-          <Suspense fallback={<div>Loading...</div>}>
+            </div>
             <div className="flex justify-between items-center mb-2">
               <EditableField
                 value={job.salary}
@@ -89,17 +84,17 @@ function ItemForm({ job, deleteJob }: Props) {
               />
               <p>$</p>
             </div>
-          </Suspense>
+          </div>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => deleteJob(job._id)}
+              className="bg-red-500 text-white px-4 py-2 rounded-md"
+            >
+              Delete
+            </button>
+          </div>
         </div>
-        <div className="flex justify-end gap-2">
-          <button
-            onClick={() => deleteJob(job._id)}
-            className="bg-red-500 text-white px-4 py-2 rounded-md"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
+      </Suspense>
     </>
   )
 }
