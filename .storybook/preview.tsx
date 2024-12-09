@@ -6,7 +6,7 @@ import {useEffect} from 'react';
 import {addons} from '@storybook/preview-api';
 import {DARK_MODE_EVENT_NAME} from 'storybook-dark-mode';
 import {MantineProvider, useMantineColorScheme,} from '@mantine/core';
-import {theme} from '../src/app/components/style/theme';
+import {theme} from '@/ui/components/style/theme';
 // theme.ts file from previous step
 
 

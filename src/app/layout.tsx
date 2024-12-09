@@ -1,12 +1,16 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
-import { MantineProvider } from "@mantine/core"
+import {MantineProvider} from "@mantine/core"
 import "@mantine/core/styles.css"
 import "@mantine/notifications/styles.css"
 import { Providers } from "@/app/providers"
 import { Notifications } from "@mantine/notifications"
-import { theme } from "@/app/components/style/theme"
+import {theme} from "@/app/components/style/theme";
+
+
+
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,7 +41,9 @@ export default function RootLayout({
         <Providers>
           <MantineProvider theme={theme}>
             <Notifications />
+            {/*<SideNav/>*/}
             <div className="p-8 max-w-4xl mx-auto">{children}</div>
+
           </MantineProvider>
         </Providers>
       </body>

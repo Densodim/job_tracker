@@ -1,5 +1,6 @@
 import { useEffect } from "react"
-import showNotification from "@/app/components/showNotification"
+import {showNotification} from "@mantine/notifications";
+
 
 const useShowNotification = ({
   isLoading,

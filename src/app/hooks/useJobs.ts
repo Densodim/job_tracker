@@ -12,6 +12,9 @@ function useJobs() {
       const res: Promise<Job[]> = await (
         await fetch(url, {
           cache: "no-store",
+          headers: {
+            // Authorization: `Bearer ${token}`,
+          },
         })
       ).json()
       return res

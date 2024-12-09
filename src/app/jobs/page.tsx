@@ -1,11 +1,16 @@
 "use client"
 import React, { Suspense, useState } from "react"
-import AddItemForm from "@/app/components/AddItemForm/AddItemForm"
-import { useShowNotification } from "@/app/hooks/useShowNotification"
-import JobsInfo from "@/app/components/Jobs-info"
-import useAddJob from "@/app/hooks/useAddJob"
 
-function JobPage() {
+import { useShowNotification } from "@/app/hooks/useShowNotification"
+
+import useAddJob from "@/app/hooks/useAddJob"
+import AddItemForm from "@/app/components/AddItemForm/AddItemForm";
+import JobsInfo from "@/app/components/Jobs-info";
+
+
+async function JobPage() {
+
+
   const [isAdding, setIsAdding] = useState(false)
 
   const { mutate: addJob, isError, error, isPending, isSuccess } = useAddJob()
@@ -29,6 +34,7 @@ function JobPage() {
 
   return (
     <>
+
       <Suspense fallback={<div>Loading...</div>}>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Вакансии</h1>
