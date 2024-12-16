@@ -5,11 +5,11 @@ import useAddJob from "@/app/hooks/useAddJob"
 import AddItemForm from "@/app/components/AddItemForm/AddItemForm"
 import JobsInfo from "@/app/components/Jobs-info"
 import { useToggleAddJob } from "@/app/hooks/useToggleAddJob"
+import { Loader } from "@mantine/core"
 
 function JobPage() {
   const { mutate: addJob, isError, error, isPending, isSuccess } = useAddJob()
   const { isAdding, toggleAdding } = useToggleAddJob()
-  console.log("isAdding:", isAdding)
 
   useShowNotification({
     isSuccess,
@@ -30,7 +30,7 @@ function JobPage() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader color="blue" />}>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Вакансии</h1>
           <button

@@ -14,18 +14,6 @@ export async function login(prevState: any, formData: FormData) {
     const email = formData.get("email")
     const password = formData.get("password")
 
-    // const validatedFields = loginSchema.safeParse({
-    //     email: email,
-    //     password: password,
-    // });
-    //
-    // if (!validatedFields.success) {
-    //     return {
-    //         message: 'validation error',
-    //         errors: validatedFields.error.flatten().fieldErrors,
-    //     };
-    // }
-
     await signIn("credentials", formData)
 
     return {

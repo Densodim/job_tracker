@@ -4,6 +4,7 @@ import { Job } from "@/app/jobs/page"
 import { useShowNotification } from "@/app/hooks/useShowNotification"
 import useDeleteJob from "@/app/hooks/useDeleteJob"
 import useJobsQuery from "@/app/hooks/useJobsQuery"
+import { Loader } from "@mantine/core"
 
 function JobsInfo() {
   const { jobs } = useJobsQuery()
@@ -21,7 +22,7 @@ function JobsInfo() {
   })
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader color="blue" />}>
       <div>
         {jobs.map((item: Job) => {
           return (

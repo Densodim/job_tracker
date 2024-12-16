@@ -4,6 +4,7 @@ import { useUpdateJob } from "@/app/hooks/useUpdateJob"
 import { useShowNotification } from "@/app/hooks/useShowNotification"
 import { notifications } from "@mantine/notifications"
 import EditableField from "@/app/components/EditableField/EditableField"
+import { Loader } from "@mantine/core"
 
 function ItemForm({ job, deleteJob }: Props) {
   const { data, isError, updateJob, isLoading, isSuccess, error } =
@@ -33,7 +34,7 @@ function ItemForm({ job, deleteJob }: Props) {
   }
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader color="blue" />}>
         <div
           key={job._id}
           className="bg-white border border-gray-300 rounded-lg p-4 mb-4 shadow"

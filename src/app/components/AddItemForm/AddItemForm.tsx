@@ -3,7 +3,7 @@ import { JobForm } from "@/app/jobs/page"
 import { useForm } from "@mantine/form"
 import UniversalInput from "@/app/components/Input/UniversalInput"
 import UniversalSelect from "@/app/components/Select/UniversalSelect"
-import { Textarea } from "@mantine/core"
+import { Loader, Textarea } from "@mantine/core"
 
 export enum StatusJobs {
   Applied = "APPLIED",
@@ -50,7 +50,7 @@ function AddItemForm({ AddJob, setIsAdding }: Props) {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader color="blue" />}>
         <div className="bg-gray-50 border border-gray-300 rounded-lg p-4 mb-6 shadow">
           <UniversalInput
             label={"Company"}
