@@ -1,58 +1,75 @@
-import type { NextAuthConfig } from "next-auth"
+import type { NextAuthConfig } from "next-auth";
+import { compare } from "bcryptjs";
 
-export const authConfig = {
-  session: {
-    strategy: "jwt",
-  },
-  pages: {
-    error: "/",
-    signIn: "/",
-    signOut: "/",
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      // Сохраняем токен и данные пользователя в JWT
-      if (user) {
-        token.id = user.id
-        token.name = user.name
-        token.email = user.email
-        token.accessToken = user.token // Bearer токен
-        token.emailVerified = user.emailVerified
-      }
-      return token
-    },
+import Credentials from "next-auth/providers/credentials";
+import Github from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 
-    async session({ session, token }) {
-      // Передаем токен в сессию
-      if (token) {
-        // @ts-ignore
-        session.user = {
-          emailVerified: token.emailVerified,
-          id: token.id as string,
-          name: token.name,
-          email: token.email as string,
+
+import {getUserByEmail} from "@/data-queries/user_data";
+import {LoginSchema} from "@/schemas";
+
+
+export default {
+  providers: [
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name,
+          email: profile.email,
+        };
+      },
+    }),
+
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.id,
+          name: profile.name,
+          email: profile.email, // Access email from Google profile
+          image: profile.picture,
+        };
+      },
+    }),
+
+    Credentials({
+      // Start Custom Credentials Providers setup
+      async authorize(credentials) {
+        const validatedLoginData = LoginSchema.safeParse(credentials);
+
+        if (validatedLoginData.success) {
+          const { email, password } = validatedLoginData.data;
+
+          /**
+           * After we have validated the credentials we received from the custom user, we now have to check two things
+           * if the user exists, through the email.
+           *
+           * Check whether the user signed up by other providers.
+           * In this case, if the user signed up, and they don't have a password, they will use the provider.
+           *
+           * if none of this is true, then it returns a null value, prompting the user to signup
+           */
+          const user = await getUserByEmail(email);
+
+          if (!user || !user.password) {
+            return null;
+          }
+
+          const matchedPassword = await compare(password, user.password);
+
+          if (matchedPassword) {
+            return user;
+          }
         }
-        session.accessToken = token.accessToken as string // Bearer токен
-      }
-      return session
-    },
-  },
-  providers: [],
-} satisfies NextAuthConfig
 
-declare module "next-auth" {
-  interface User {
-    token: string // Добавляем поле token в тип User
-    emailVerified?: any
-  }
-
-  interface Session {
-    user: User
-    accessToken: string // Если ты используешь это поле в сессии
-  }
-
-  interface JWT {
-    token: string // Если ты хочешь хранить токен в JWT
-    emailVerified?: any
-  }
-}
+        return null;
+      },
+      // End
+    }),
+  ],
+} satisfies NextAuthConfig;
